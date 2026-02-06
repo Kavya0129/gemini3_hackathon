@@ -25,7 +25,7 @@ ${financialContext}
 Based on this context, provide personalized insights and answer questions about their finances. Help them understand trends, identify opportunities for improvement, and plan for the future.`
 
   const result = streamText({
-    model: google('gemini-2.5-flash-preview-05-20'),
+    model: google('gemini-3-flash-preview'),
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
     abortSignal: req.signal,

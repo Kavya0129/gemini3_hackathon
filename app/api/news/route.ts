@@ -1,5 +1,7 @@
 import { generateText, Output } from 'ai'
 import { z } from 'zod'
+import { google } from '@ai-sdk/google';
+
 
 export const maxDuration = 60
 
@@ -46,7 +48,7 @@ For each article, include:
 - One actionable insight they can apply`
 
   const result = await generateText({
-    model: 'google/gemini-2.5-flash-preview-05-20',
+    model: google('gemini-3-flash-preview'),
     prompt,
     output: Output.object({ schema: NewsSchema }),
     abortSignal: req.signal,

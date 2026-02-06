@@ -1,5 +1,7 @@
 import { generateText, Output } from "ai";
 import { z } from "zod";
+import { google } from '@ai-sdk/google';
+
 
 export const maxDuration = 60;
 
@@ -64,7 +66,7 @@ ${Object.entries(parameters)
 Generate realistic, data-driven projections based on the user's actual financial data. All dollar amounts should be whole numbers. For the projection timeline, create 6-8 data points spanning from the current month to 3-5 years out, showing realistic compounding and cost effects. Make the breakdown categories specific to this scenario type.`;
 
   const result = await generateText({
-    model: "google/gemini-2.5-flash-preview-05-20",
+    model: google('gemini-3-flash-preview'),
     prompt,
     output: Output.object({ schema: simulationOutputSchema }),
     abortSignal: req.signal,
