@@ -1,3 +1,10 @@
+export interface BudgetCategory {
+  id: string
+  name: string
+  budgeted: number
+  actual: number
+}
+
 export interface MonthlySnapshot {
   id: string
   month: string // YYYY-MM format
@@ -6,6 +13,7 @@ export interface MonthlySnapshot {
   savings: number
   majorEvents: string[]
   notes: string
+  budgetCategories?: BudgetCategory[]
   createdAt: string
 }
 
@@ -40,4 +48,18 @@ export interface NewsArticle {
   publishedAt: string
 }
 
-export type TabType = 'dashboard' | 'snapshot' | 'copilot' | 'simulator' | 'news'
+export interface InvestmentRecommendation {
+  allocation: {
+    stocks: number
+    bonds: number
+    cash: number
+    alternatives?: number
+  }
+  reasoning: string
+  riskScore: number // 1-10
+  expectedReturn: string
+  timeline: string
+  suggestions: string[]
+}
+
+export type TabType = 'dashboard' | 'snapshot' | 'copilot' | 'simulator' | 'news' | 'investment'

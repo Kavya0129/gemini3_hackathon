@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import type { MonthlySnapshot, UserProfile } from '@/lib/types'
 import { TrendingUp, TrendingDown, Wallet, PiggyBank, Target, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { BudgetTracker } from '@/components/budget-tracker'
 import { useMemo } from 'react'
 import {
   LineChart,
@@ -20,7 +21,7 @@ import {
 interface DashboardProps {
   snapshots: MonthlySnapshot[]
   profile: UserProfile | null
-  onNavigate: (tab: 'snapshot' | 'copilot' | 'simulator') => void
+  onNavigate: (tab: 'snapshot' | 'copilot' | 'simulator' | 'investment') => void
 }
 
 export function Dashboard({ snapshots, profile, onNavigate }: DashboardProps) {
@@ -215,6 +216,9 @@ export function Dashboard({ snapshots, profile, onNavigate }: DashboardProps) {
         </div>
       )}
 
+      {/* Budget Tracker */}
+      <BudgetTracker snapshots={snapshots} />
+
       {/* Quick Actions */}
       <Card>
         <CardHeader>
@@ -231,9 +235,9 @@ export function Dashboard({ snapshots, profile, onNavigate }: DashboardProps) {
               <Target className="h-5 w-5 text-chart-2" />
               <span>Ask AI Copilot</span>
             </Button>
-            <Button variant="outline" className="h-auto py-4 flex-col gap-2 bg-transparent" onClick={() => onNavigate('simulator')}>
+            <Button variant="outline" className="h-auto py-4 flex-col gap-2 bg-transparent" onClick={() => onNavigate('investment')}>
               <TrendingUp className="h-5 w-5 text-chart-4" />
-              <span>Run Simulation</span>
+              <span>Investment Guide</span>
             </Button>
           </div>
         </CardContent>

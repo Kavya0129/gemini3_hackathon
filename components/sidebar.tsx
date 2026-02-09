@@ -17,7 +17,11 @@ import {
   Shield,
   Menu,
   X,
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+  TrendingUp,
+>>>>>>> Stashed changes
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 =======
@@ -38,6 +42,7 @@ const navItems: { id: TabType; label: string; icon: React.ReactNode }[] = [
   { id: 'snapshot', label: 'Monthly Snapshot', icon: <CalendarPlus className="h-5 w-5" /> },
   { id: 'copilot', label: 'AI Copilot', icon: <MessageSquareText className="h-5 w-5" /> },
   { id: 'simulator', label: 'Life Simulator', icon: <Calculator className="h-5 w-5" /> },
+  { id: 'investment', label: 'Investment Guide', icon: <TrendingUp className="h-5 w-5" /> },
   { id: 'news', label: 'Economic News', icon: <Newspaper className="h-5 w-5" /> },
 ]
 

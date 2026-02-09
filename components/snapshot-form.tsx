@@ -9,13 +9,20 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import type { MonthlySnapshot } from '@/lib/types'
-import { Plus, X, Calendar, DollarSign, TrendingUp, FileText, CheckCircle2 } from 'lucide-react'
+import type { MonthlySnapshot, BudgetCategory } from '@/lib/types'
+import { Plus, X, Calendar, DollarSign, TrendingUp, FileText, CheckCircle2, Trash2 } from 'lucide-react'
 
 interface SnapshotFormProps {
   snapshots: MonthlySnapshot[]
   onSave: (snapshot: MonthlySnapshot) => void
   onDelete: (id: string) => void
+}
+
+interface FormBudgetCategory {
+  id: string
+  name: string
+  budgeted: string
+  actual: string
 }
 
 const majorEventSuggestions = [
@@ -45,10 +52,26 @@ export function SnapshotForm({ snapshots, onSave, onDelete }: SnapshotFormProps)
     majorEvents: [] as string[],
     notes: '',
     customEvent: '',
+    budgetCategories: [
+      { id: '1', name: 'Housing', budgeted: '', actual: '' },
+      { id: '2', name: 'Food & Groceries', budgeted: '', actual: '' },
+      { id: '3', name: 'Transportation', budgeted: '', actual: '' },
+      { id: '4', name: 'Entertainment', budgeted: '', actual: '' },
+      { id: '5', name: 'Utilities', budgeted: '', actual: '' },
+    ] as FormBudgetCategory[],
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    const budgetCategories = form.budgetCategories
+      .filter((cat) => parseFloat(cat.budgeted) > 0 || parseFloat(cat.actual) > 0)
+      .map((cat) => ({
+        id: cat.id,
+        name: cat.name,
+        budgeted: parseFloat(cat.budgeted) || 0,
+        actual: parseFloat(cat.actual) || 0,
+      }))
+
     const snapshot: MonthlySnapshot = {
       id: crypto.randomUUID(),
       month: form.month,
@@ -57,6 +80,7 @@ export function SnapshotForm({ snapshots, onSave, onDelete }: SnapshotFormProps)
       savings: parseFloat(form.savings) || 0,
       majorEvents: form.majorEvents,
       notes: form.notes,
+      budgetCategories,
       createdAt: new Date().toISOString(),
     }
     onSave(snapshot)
@@ -68,6 +92,13 @@ export function SnapshotForm({ snapshots, onSave, onDelete }: SnapshotFormProps)
       majorEvents: [],
       notes: '',
       customEvent: '',
+      budgetCategories: [
+        { id: '1', name: 'Housing', budgeted: '', actual: '' },
+        { id: '2', name: 'Food & Groceries', budgeted: '', actual: '' },
+        { id: '3', name: 'Transportation', budgeted: '', actual: '' },
+        { id: '4', name: 'Entertainment', budgeted: '', actual: '' },
+        { id: '5', name: 'Utilities', budgeted: '', actual: '' },
+      ] as FormBudgetCategory[],
     })
     setSuccess(true)
     setTimeout(() => {
@@ -274,6 +305,74 @@ export function SnapshotForm({ snapshots, onSave, onDelete }: SnapshotFormProps)
                   )}
                 </div>
 
+                {/* Budget Categories */}
+                <div className="space-y-4 p-4 bg-muted/30 rounded-lg border border-primary/10">
+                  <Label className="flex items-center gap-2 font-semibold">
+                    <DollarSign className="h-4 w-4 text-primary" />
+                    Budget vs Actual by Category (Optional)
+                  </Label>
+                  <p className="text-xs text-muted-foreground">
+                    Track how your actual spending compared to your budget for each category
+                  </p>
+                  <div className="space-y-3">
+                    {form.budgetCategories.map((category, idx) => (
+                      <div key={category.id} className="grid grid-cols-3 gap-3">
+                        <div className="flex items-center">
+                          <span className="text-sm font-medium text-muted-foreground">{category.name}</span>
+                        </div>
+                        <div className="space-y-1">
+                          <Label htmlFor={`budgeted-${idx}`} className="text-xs text-muted-foreground">
+                            Budgeted
+                          </Label>
+                          <div className="relative">
+                            <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+                              $
+                            </span>
+                            <Input
+                              id={`budgeted-${idx}`}
+                              type="number"
+                              placeholder="0"
+                              value={category.budgeted}
+                              onChange={(e) => {
+                                const newCategories = [...form.budgetCategories]
+                                newCategories[idx].budgeted = e.target.value
+                                setForm({ ...form, budgetCategories: newCategories })
+                              }}
+                              className="pl-6 text-sm"
+                              min="0"
+                              step="0.01"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          <Label htmlFor={`actual-${idx}`} className="text-xs text-muted-foreground">
+                            Actual
+                          </Label>
+                          <div className="relative">
+                            <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+                              $
+                            </span>
+                            <Input
+                              id={`actual-${idx}`}
+                              type="number"
+                              placeholder="0"
+                              value={category.actual}
+                              onChange={(e) => {
+                                const newCategories = [...form.budgetCategories]
+                                newCategories[idx].actual = e.target.value
+                                setForm({ ...form, budgetCategories: newCategories })
+                              }}
+                              className="pl-6 text-sm"
+                              min="0"
+                              step="0.01"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Notes */}
                 <div className="space-y-2">
                   <Label htmlFor="notes">Additional Notes (Optional)</Label>
@@ -353,6 +452,30 @@ export function SnapshotForm({ snapshots, onSave, onDelete }: SnapshotFormProps)
                               {event}
                             </Badge>
                           ))}
+                        </div>
+                      )}
+                      {snapshot.budgetCategories && snapshot.budgetCategories.length > 0 && (
+                        <div className="mt-3 pt-3 border-t border-border">
+                          <p className="text-xs text-muted-foreground mb-2 font-medium">Budget Breakdown:</p>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                            {snapshot.budgetCategories.map((cat) => {
+                              const diff = cat.actual - cat.budgeted
+                              const isOver = diff > 0
+                              return (
+                                <div key={cat.id} className="text-xs p-2 bg-muted/50 rounded">
+                                  <p className="text-muted-foreground">{cat.name}</p>
+                                  <p className="font-semibold">
+                                    {formatCurrency(cat.actual)} /{' '}
+                                    <span className="text-muted-foreground">{formatCurrency(cat.budgeted)}</span>
+                                  </p>
+                                  <p className={isOver ? 'text-destructive text-xs' : 'text-chart-2 text-xs'}>
+                                    {isOver ? '+' : ''}
+                                    {formatCurrency(diff)}
+                                  </p>
+                                </div>
+                              )
+                            })}
+                          </div>
                         </div>
                       )}
                       {snapshot.notes && (
