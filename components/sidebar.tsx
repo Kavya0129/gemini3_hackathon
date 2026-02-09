@@ -14,6 +14,7 @@ import {
   Menu,
   X,
   LogOut,
+  TrendingUp,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
