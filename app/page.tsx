@@ -1,10 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-<<<<<<< HEAD
-=======
 import { useRouter } from 'next/navigation'
->>>>>>> 89d28b4 (login pg)
 import { Sidebar } from '@/components/sidebar'
 import { Dashboard } from '@/components/dashboard'
 import { SnapshotForm } from '@/components/snapshot-form'
@@ -13,11 +10,6 @@ import { LifeSimulator } from '@/components/life-simulator'
 import { NewsFeed } from '@/components/news-feed'
 import { InvestmentRecommendationWidget } from '@/components/investment-recommendation'
 import { useLocalStorage } from '@/hooks/use-local-storage'
-<<<<<<< HEAD
-import type { TabType, MonthlySnapshot, UserProfile } from '@/lib/types'
-
-export default function Home() {
-=======
 import { useAuth } from '@/lib/auth-context'
 import { useDemoData } from '@/hooks/use-demo-data'
 import type { TabType, MonthlySnapshot, UserProfile } from '@/lib/types'
@@ -26,7 +18,6 @@ export default function Home() {
   const router = useRouter()
   const { user, isLoading: authLoading } = useAuth()
   useDemoData(user)
->>>>>>> 89d28b4 (login pg)
   const [activeTab, setActiveTab] = useState<TabType>('dashboard')
   const [snapshots, setSnapshots, snapshotsLoaded] = useLocalStorage<MonthlySnapshot[]>(
     'finwise-snapshots',
@@ -42,8 +33,6 @@ export default function Home() {
     setMounted(true)
   }, [])
 
-<<<<<<< HEAD
-=======
   // Redirect to auth if not logged in
   useEffect(() => {
     if (!authLoading && !user) {
@@ -51,7 +40,6 @@ export default function Home() {
     }
   }, [authLoading, user, router])
 
->>>>>>> 89d28b4 (login pg)
   const handleSaveSnapshot = (snapshot: MonthlySnapshot) => {
     setSnapshots((prev) => {
       const existingIndex = prev.findIndex((s) => s.month === snapshot.month)
@@ -72,13 +60,8 @@ export default function Home() {
     setActiveTab(tab)
   }
 
-<<<<<<< HEAD
-  // Wait for client-side hydration
-  if (!mounted || !snapshotsLoaded || !profileLoaded) {
-=======
   // Wait for client-side hydration and auth check
   if (!mounted || !snapshotsLoaded || !profileLoaded || authLoading || !user) {
->>>>>>> 89d28b4 (login pg)
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">

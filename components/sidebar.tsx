@@ -1,11 +1,7 @@
 'use client'
 
 import React from "react"
-<<<<<<< HEAD
-
-=======
 import { useRouter } from 'next/navigation'
->>>>>>> 89d28b4 (login pg)
 import { cn } from '@/lib/utils'
 import type { TabType } from '@/lib/types'
 import {
@@ -17,19 +13,10 @@ import {
   Shield,
   Menu,
   X,
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-  TrendingUp,
->>>>>>> Stashed changes
-} from 'lucide-react'
-import { Button } from '@/components/ui/button'
-=======
   LogOut,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
->>>>>>> 89d28b4 (login pg)
 import { useState } from 'react'
 
 interface SidebarProps {
@@ -47,10 +34,6 @@ const navItems: { id: TabType; label: string; icon: React.ReactNode }[] = [
 ]
 
 export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
-<<<<<<< HEAD
-  const [mobileOpen, setMobileOpen] = useState(false)
-
-=======
   const router = useRouter()
   const { user, logout } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -60,7 +43,6 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
     router.push('/auth')
   }
 
->>>>>>> 89d28b4 (login pg)
   return (
     <>
       {/* Mobile menu button */}
@@ -123,10 +105,6 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
             ))}
           </nav>
 
-<<<<<<< HEAD
-          {/* Privacy badge */}
-          <div className="px-4 py-4 border-t border-sidebar-border">
-=======
           {/* User Info and Privacy badge */}
           <div className="px-4 py-4 border-t border-sidebar-border space-y-3">
             {user && (
@@ -139,15 +117,12 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
                 </p>
               </div>
             )}
->>>>>>> 89d28b4 (login pg)
             <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-sidebar-accent/50">
               <Shield className="h-4 w-4 text-sidebar-primary" />
               <span className="text-xs text-sidebar-foreground/70">
                 Your data stays on your device
               </span>
             </div>
-<<<<<<< HEAD
-=======
             <Button
               onClick={handleLogout}
               variant="outline"
@@ -157,7 +132,6 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
               <LogOut className="h-4 w-4 mr-2" />
               Logout
             </Button>
->>>>>>> 89d28b4 (login pg)
           </div>
         </div>
       </aside>

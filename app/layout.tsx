@@ -2,10 +2,7 @@ import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Inter, DM_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-<<<<<<< HEAD
-=======
 import { Providers } from './providers'
->>>>>>> 89d28b4 (login pg)
 import './globals.css'
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
@@ -49,13 +46,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${dmSans.variable} font-sans antialiased`}>
-<<<<<<< HEAD
-        {children}
-=======
         <Providers>
           {children}
         </Providers>
->>>>>>> 89d28b4 (login pg)
         <Analytics />
       </body>
     </html>
