@@ -1,7 +1,6 @@
 import { generateText, Output } from 'ai'
+import {google } from '@ai-sdk/google';
 import { z } from 'zod'
-import { google } from '@ai-sdk/google';
-
 
 export const maxDuration = 60
 
@@ -42,13 +41,13 @@ Generate news that:
 
 For each article, include:
 - A compelling title
-- A 2-3 sentence summary
+- A 2-3 sentence summary (concise, key points only)
 - The appropriate category
-- Why it's relevant to this user specifically
-- One actionable insight they can apply`
+- Why it's relevant to this user specifically (1-2 sentences max)
+- One actionable insight they can apply (1 sentence, practical)`
 
   const result = await generateText({
-    model: google('gemini-3-flash-preview'),
+    model: google('gemini-3-flash'),
     prompt,
     output: Output.object({ schema: NewsSchema }),
     abortSignal: req.signal,

@@ -10,7 +10,7 @@ const dmSans = DM_Sans({ subsets: ["latin"], variable: '--font-dm-sans' });
 export const metadata: Metadata = {
   title: 'Finwise - AI Financial Growth Companion',
   description: 'Privacy-first AI financial companion that turns monthly money snapshots into smart, forward-looking financial guidance.',
-  generator: 'v0.app',
+  generator: 'finwise.app',
   icons: {
     icon: [
       {

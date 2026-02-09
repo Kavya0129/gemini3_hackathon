@@ -7,6 +7,7 @@ import { SnapshotForm } from '@/components/snapshot-form'
 import { AICopilot } from '@/components/ai-copilot'
 import { LifeSimulator } from '@/components/life-simulator'
 import { NewsFeed } from '@/components/news-feed'
+import { InvestmentRecommendationWidget } from '@/components/investment-recommendation'
 import { useLocalStorage } from '@/hooks/use-local-storage'
 import type { TabType, MonthlySnapshot, UserProfile } from '@/lib/types'
 
@@ -87,6 +88,9 @@ export default function Home() {
           )}
           {activeTab === 'news' && (
             <NewsFeed snapshots={snapshots} profile={profile} />
+          )}
+          {activeTab === 'investment' && (
+            <InvestmentRecommendationWidget snapshots={snapshots} profile={profile} />
           )}
         </div>
       </main>
